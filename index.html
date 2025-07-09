@@ -94,7 +94,6 @@
 </head>
 <body class="flex items-center justify-center">
   <div class="relative w-full max-w-6xl h-[85vh] max-h-[700px] z-10">
-    <!-- 翻页按钮 - 优化响应式样式和透明度 -->
     <button id="prev-btn" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-white/70 border border-gray-300/50 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-white/90 z-30 transition-all md:absolute md:left-[-60px] md:bg-white md:hover:bg-gray-50">
       <i class="fa fa-chevron-left text-gray-700 text-lg"></i>
     </button>
@@ -102,57 +101,44 @@
       <i class="fa fa-chevron-right text-gray-700 text-lg"></i>
     </button>
 
-    <!-- 幻灯片容器 -->
     <div id="slides" class="w-full h-full relative overflow-hidden rounded-lg shadow-2xl">
       
-      <!-- 幻灯片1：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/01-2.jpg" class="shadow-2xl rounded-lg" />
         </div>
         <div class="slide-number relative z-10" style="margin-bottom:5px">1/7</div>
       </div>
       
-      <!-- 幻灯片2：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/02.jpg" class="shadow-2xl rounded-lg" />
         </div>
         <div class="slide-number relative z-10" style="margin-bottom:5px">2/7</div>
       </div>
       
-      <!-- 幻灯片3：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/03.jpg" class="shadow-2xl rounded-lg" />
         </div>
         <div class="slide-number relative z-10" style="margin-bottom:5px">3/7</div>
       </div>
       
-      <!-- 幻灯片4：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/04.jpg" class="shadow-2xl rounded-lg" />
         </div>
         <div class="slide-number relative z-10" style="margin-bottom:5px">4/7</div>
       </div>
       
-      <!-- 幻灯片5：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/05.jpg" class="shadow-2xl rounded-lg" />
         </div>
         <div class="slide-number relative z-10" style="margin-bottom:5px">5/7</div>
       </div>
       
-      <!-- 幻灯片6：标题页 -->
-      <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-      <!-- 中心主图 -->
+      <div class="slide absolute inset-0 transition-opacity duration-500 overflow-hidden">
           <div class="relative z-10 text-center flex items-center justify-center h-full">
             <img src="factoryimg/06.jpg" class="shadow-2xl rounded-lg z-10" />
             <video src="factoryimg/introduction.mp4" controls 
@@ -165,45 +151,39 @@
   </div>
 
   <script>
-    // 幻灯片功能实现
     const slides = document.querySelectorAll('.slide');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
     let currentSlide = 0;
 
-    // 检测是否为移动设备
     function isMobileDevice() {
-      return window.innerWidth < 768; // 以768px为界限，可根据需要调整
+      return window.innerWidth < 768;
     }
 
-    // 显示指定幻灯片
     function showSlide(index) {
-      // 隐藏所有幻灯片
-      slides.forEach(slide => {
-        slide.classList.add('hidden');
-        slide.style.opacity = '0';
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.style.opacity = '1';
+          slide.style.pointerEvents = 'auto';
+          slide.style.zIndex = '10';
+        } else {
+          slide.style.opacity = '0';
+          slide.style.pointerEvents = 'none';
+          slide.style.zIndex = '0';
+        }
       });
-      
-      // 显示当前幻灯片
-      slides[index].classList.remove('hidden');
-      setTimeout(() => {
-        slides[index].style.opacity = '1';
-      }, 50);
     }
 
-    // 上一张幻灯片
     prevBtn.addEventListener('click', () => {
       currentSlide = (currentSlide - 1 + slides.length) % slides.length;
       showSlide(currentSlide);
     });
 
-    // 下一张幻灯片
     nextBtn.addEventListener('click', () => {
       currentSlide = (currentSlide + 1) % slides.length;
       showSlide(currentSlide);
     });
 
-    // 键盘导航
     document.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowLeft') prevBtn.click();
       if (e.key === 'ArrowRight') nextBtn.click();
@@ -217,39 +197,41 @@
       }
     });
 
-    // 禁止移动设备上的滑动翻页
-    if (!isMobileDevice()) {
-      // 触摸支持 - 仅在非移动设备上启用
-      let startX = 0;
-      let endX = 0;
+    let touchStartX = 0;
 
-      document.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-      });
+    function onTouchStart(e) {
+      touchStartX = e.touches[0].clientX;
+    }
 
-      document.addEventListener('touchend', (e) => {
-        endX = e.changedTouches[0].clientX;
-        handleSwipe();
-      });
+    function onTouchEnd(e) {
+      const touchEndX = e.changedTouches[0].clientX;
+      const threshold = 50;
+      const swipeDistance = touchStartX - touchEndX;
 
-      function handleSwipe() {
-        const threshold = 50;
-        const diff = startX - endX;
-        
-        if (Math.abs(diff) > threshold) {
-          if (diff > 0) {
-            // 向左滑动，下一张
-            nextBtn.click();
-          } else {
-            // 向右滑动，上一张
-            prevBtn.click();
-          }
+      if (Math.abs(swipeDistance) > threshold) {
+        if (swipeDistance > 0) {
+          nextBtn.click();
+        } else {
+          prevBtn.click();
         }
       }
     }
 
-    // 初始化显示第一张幻灯片
+    function updateSwipeListeners() {
+      if (isMobileDevice()) {
+        document.removeEventListener('touchstart', onTouchStart);
+        document.removeEventListener('touchend', onTouchEnd);
+      } else {
+        document.addEventListener('touchstart', onTouchStart);
+        document.addEventListener('touchend', onTouchEnd);
+      }
+    }
+
+    updateSwipeListeners();
+    window.addEventListener('resize', updateSwipeListeners);
+
     showSlide(currentSlide);
   </script>
 </body>
 </html>
+
