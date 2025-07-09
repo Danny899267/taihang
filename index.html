@@ -94,11 +94,11 @@
 </head>
 <body class="flex items-center justify-center">
   <div class="relative w-full max-w-6xl h-[85vh] max-h-[700px] z-10">
-    <!-- 翻页按钮 - 优化响应式样式 -->
-    <button id="prev-btn" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all md:absolute md:left-[-60px]">
+    <!-- 翻页按钮 - 优化响应式样式和透明度 -->
+    <button id="prev-btn" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-white/70 border border-gray-300/50 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-white/90 z-30 transition-all md:absolute md:left-[-60px] md:bg-white md:hover:bg-gray-50">
       <i class="fa fa-chevron-left text-gray-700 text-lg"></i>
     </button>
-    <button id="next-btn" class="fixed right-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all md:absolute md:right-[-60px]">
+    <button id="next-btn" class="fixed right-4 top-1/2 transform -translate-y-1/2 bg-white/70 border border-gray-300/50 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-white/90 z-30 transition-all md:absolute md:right-[-60px] md:bg-white md:hover:bg-gray-50">
       <i class="fa fa-chevron-right text-gray-700 text-lg"></i>
     </button>
 
@@ -171,6 +171,11 @@
     const nextBtn = document.getElementById('next-btn');
     let currentSlide = 0;
 
+    // 检测是否为移动设备
+    function isMobileDevice() {
+      return window.innerWidth < 768; // 以768px为界限，可根据需要调整
+    }
+
     // 显示指定幻灯片
     function showSlide(index) {
       // 隐藏所有幻灯片
@@ -212,30 +217,33 @@
       }
     });
 
-    // 触摸支持
-    let startX = 0;
-    let endX = 0;
+    // 禁止移动设备上的滑动翻页
+    if (!isMobileDevice()) {
+      // 触摸支持 - 仅在非移动设备上启用
+      let startX = 0;
+      let endX = 0;
 
-    document.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
-    });
+      document.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      });
 
-    document.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      handleSwipe();
-    });
+      document.addEventListener('touchend', (e) => {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+      });
 
-    function handleSwipe() {
-      const threshold = 50;
-      const diff = startX - endX;
-      
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0) {
-          // 向左滑动，下一张
-          nextBtn.click();
-        } else {
-          // 向右滑动，上一张
-          prevBtn.click();
+      function handleSwipe() {
+        const threshold = 50;
+        const diff = startX - endX;
+        
+        if (Math.abs(diff) > threshold) {
+          if (diff > 0) {
+            // 向左滑动，下一张
+            nextBtn.click();
+          } else {
+            // 向右滑动，上一张
+            prevBtn.click();
+          }
         }
       }
     }
@@ -244,5 +252,4 @@
     showSlide(currentSlide);
   </script>
 </body>
-
 </html>
