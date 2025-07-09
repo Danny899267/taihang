@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Taihang Music Fountain PPT</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -16,9 +16,9 @@
             accent: '#FF6600'
           },
           fontFamily: {
-            'roca': ['Arial Black', 'Arial', 'sans-serif'], // Fallback for Roca One
+            'roca': ['Arial Black', 'Arial', 'sans-serif'],
             'source': ['Source Sans Pro', 'Arial', 'sans-serif'],
-            'codec': ['Arial Black', 'Impact', 'sans-serif'] // Fallback for Codec Pro ExtraBold
+            'codec': ['Arial Black', 'Impact', 'sans-serif']
           }
         }
       }
@@ -89,12 +89,68 @@
         filter: blur(15px);
         opacity: 0.2;
       }
+      /* 横屏提示样式（仅手机端显示） */
+      #orientation-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 1.5rem;
+        text-align: center;
+        padding: 20px;
+        display: none; /* 默认隐藏 */
+      }
+      #orientation-icon {
+        font-size: 5rem;
+        margin-bottom: 20px;
+        animation: rotate 2s ease-in-out infinite;
+      }
+      @keyframes rotate {
+        0% { transform: rotate(0deg); }
+        50% { transform: rotate(90deg); }
+        100% { transform: rotate(0deg); }
+      }
+      /* 手机端图片适配 */
+      @media (max-width: 768px) and (pointer: coarse) { /* 针对触摸屏手机 */
+        .slide img {
+          max-width: 100vh;
+          max-height: 100vw;
+          object-fit: contain;
+        }
+        /* 手机端隐藏左右翻页按钮，使用滑动翻页 */
+        #prev-btn, #next-btn {
+          display: none;
+        }
+      }
+      /* 电脑端保持原有样式 */
+      @media (min-width: 769px) or (pointer: fine) { /* 非手机设备（含平板） */
+        #orientation-overlay {
+          display: none !important; /* 强制隐藏 */
+        }
+      }
     }
   </style>
 </head>
 <body class="flex items-center justify-center">
+  <!-- 横屏提示覆盖层（仅手机端可能显示） -->
+  <div id="orientation-overlay">
+    <i id="orientation-icon" class="fa fa-mobile"></i>
+    <p>请将手机横屏以获得最佳体验</p>
+    <button id="fullscreen-btn" class="mt-4 bg-primary text-white px-6 py-2 rounded-full">
+      进入全屏
+    </button>
+  </div>
+
   <div class="relative w-full max-w-6xl h-[85vh] max-h-[700px] z-10">
-    <!-- 翻页按钮 -->
+    <!-- 翻页按钮（仅电脑端显示） -->
     <button id="prev-btn" class="absolute left-[-60px] top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all">
       <i class="fa fa-chevron-left text-gray-700 text-lg"></i>
     </button>
@@ -105,71 +161,142 @@
     <!-- 幻灯片容器 -->
     <div id="slides" class="w-full h-full relative overflow-hidden rounded-lg shadow-2xl">
       
-      <!-- 幻灯片1：标题页 -->
+      <!-- 幻灯片1 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/01-2.jpg" class="shadow-2xl rounded-lg" />
         </div>
-        <div class="slide-number relative z-10" style="margin-bottom:5px">1/7</div>
+        <div class="slide-number relative z-10">1/6</div>
       </div>
       
-      <!-- 幻灯片2：标题页 -->
+      <!-- 幻灯片2 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/02.jpg" class="shadow-2xl rounded-lg" />
         </div>
-        <div class="slide-number relative z-10" style="margin-bottom:5px">2/7</div>
+        <div class="slide-number relative z-10">2/6</div>
       </div>
       
-      <!-- 幻灯片3：标题页 -->
+      <!-- 幻灯片3 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/03.jpg" class="shadow-2xl rounded-lg" />
         </div>
-        <div class="slide-number relative z-10" style="margin-bottom:5px">3/7</div>
+        <div class="slide-number relative z-10">3/6</div>
       </div>
       
-      <!-- 幻灯片4：标题页 -->
+      <!-- 幻灯片4 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/04.jpg" class="shadow-2xl rounded-lg" />
         </div>
-        <div class="slide-number relative z-10" style="margin-bottom:5px">4/7</div>
+        <div class="slide-number relative z-10">4/6</div>
       </div>
       
-      <!-- 幻灯片5：标题页 -->
+      <!-- 幻灯片5 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-        <!-- 中心主图 -->
-        <div class="relative z-10 text-center flex items-center justify-center h-full" style="">
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
           <img src="factoryimg/05.jpg" class="shadow-2xl rounded-lg" />
         </div>
-        <div class="slide-number relative z-10" style="margin-bottom:5px">5/7</div>
+        <div class="slide-number relative z-10">5/6</div>
       </div>
       
-      <!-- 幻灯片6：标题页 -->
+      <!-- 幻灯片6 -->
       <div class="slide absolute duration-500 w-full h-full overflow-hidden">
-      <!-- 中心主图 -->
-          <div class="relative z-10 text-center flex items-center justify-center h-full">
-            <img src="factoryimg/06.jpg" class="shadow-2xl rounded-lg z-10" />
-            <video src="factoryimg/introduction.mp4" controls 
-                   class="absolute z-20 w-auto h-auto max-w-[80%] max-h-[80%]" style="margin-top:40px"></video>
-          </div>
-          <div class="slide-number relative z-10" style="margin-bottom:5px">6/7</div>
+        <div class="relative z-10 text-center flex items-center justify-center h-full">
+          <img src="factoryimg/06.jpg" class="shadow-2xl rounded-lg z-10" />
+          <video src="factoryimg/introduction.mp4" controls 
+                 class="absolute z-20 w-auto h-auto max-w-[80%] max-h-[80%]" style="margin-top:40px"></video>
+        </div>
+        <div class="slide-number relative z-10">6/6</div>
       </div>
       
-      
-
-      
-      </div>
     </div>
   </div>
 
   <script>
-    // 幻灯片功能实现
+    // 设备检测（更精准区分手机和电脑）
+    function isMobilePhone() {
+      // 排除平板，仅识别手机设备
+      const userAgent = navigator.userAgent;
+      return /Mobi|Android.*Mobile|iPhone|iPod/i.test(userAgent) && 
+             !/iPad|Tablet|Android(?!.*Mobile)/i.test(userAgent);
+    }
+    
+    function isLandscape() {
+      return window.innerWidth > window.innerHeight;
+    }
+    
+    // 全屏控制（仅对手机生效）
+    function requestFullscreen() {
+      if (!isMobilePhone()) return; // 非手机不执行
+      
+      const docEl = document.documentElement;
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      }
+    }
+    
+    function exitFullscreen() {
+      if (!isMobilePhone()) return; // 非手机不执行
+      
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+    
+    // 方向检测逻辑（仅对手机生效）
+    function checkOrientation() {
+      const overlay = document.getElementById('orientation-overlay');
+      const isPhone = isMobilePhone();
+      
+      if (isPhone) {
+        // 手机设备：根据方向显示/隐藏提示
+        if (isLandscape()) {
+          overlay.style.display = 'none';
+          // 横屏时自动请求全屏（如果尚未全屏）
+          if (!document.fullscreenElement) {
+            requestFullscreen();
+          }
+        } else {
+          overlay.style.display = 'flex';
+        }
+      } else {
+        // 非手机设备：强制隐藏提示，不执行任何全屏操作
+        overlay.style.display = 'none';
+      }
+    }
+    
+    // 全屏按钮点击事件（仅手机可见）
+    document.getElementById('fullscreen-btn').addEventListener('click', function() {
+      if (isMobilePhone()) {
+        requestFullscreen();
+      }
+    });
+    
+    // 仅在手机端监听方向变化
+    if (isMobilePhone()) {
+      window.addEventListener('resize', checkOrientation);
+      window.addEventListener('orientationchange', checkOrientation);
+      window.addEventListener('fullscreenchange', checkOrientation);
+      window.addEventListener('webkitfullscreenchange', checkOrientation);
+      window.addEventListener('mozfullscreenchange', checkOrientation);
+      window.addEventListener('MSFullscreenChange', checkOrientation);
+    }
+    
+    // 幻灯片核心功能（全设备通用）
     const slides = document.querySelectorAll('.slide');
     const prevBtn = document.getElementById('prev-btn');
     const nextBtn = document.getElementById('next-btn');
@@ -177,13 +304,11 @@
 
     // 显示指定幻灯片
     function showSlide(index) {
-      // 隐藏所有幻灯片
       slides.forEach(slide => {
         slide.classList.add('hidden');
         slide.style.opacity = '0';
       });
       
-      // 显示当前幻灯片
       slides[index].classList.remove('hidden');
       setTimeout(() => {
         slides[index].style.opacity = '1';
@@ -202,8 +327,11 @@
       showSlide(currentSlide);
     });
 
-    // 键盘导航
+    // 键盘导航（主要用于电脑端）
     document.addEventListener('keydown', (e) => {
+      // 手机端不响应键盘事件
+      if (isMobilePhone()) return;
+      
       if (e.key === 'ArrowLeft') prevBtn.click();
       if (e.key === 'ArrowRight') nextBtn.click();
       if (e.key === 'Home') {
@@ -216,17 +344,21 @@
       }
     });
 
-    // 触摸支持
+    // 触摸滑动导航（仅手机端有效）
     let startX = 0;
     let endX = 0;
 
     document.addEventListener('touchstart', (e) => {
-      startX = e.touches[0].clientX;
+      if (isMobilePhone()) {
+        startX = e.touches[0].clientX;
+      }
     });
 
     document.addEventListener('touchend', (e) => {
-      endX = e.changedTouches[0].clientX;
-      handleSwipe();
+      if (isMobilePhone()) {
+        endX = e.changedTouches[0].clientX;
+        handleSwipe();
+      }
     });
 
     function handleSwipe() {
@@ -236,16 +368,21 @@
       if (Math.abs(diff) > threshold) {
         if (diff > 0) {
           // 向左滑动，下一张
-          nextBtn.click();
+          currentSlide = (currentSlide + 1) % slides.length;
         } else {
           // 向右滑动，上一张
-          prevBtn.click();
+          currentSlide = (currentSlide - 1 + slides.length) % slides.length;
         }
+        showSlide(currentSlide);
       }
     }
 
-    // 初始化显示第一张幻灯片
+    // 初始化
     showSlide(currentSlide);
+    // 仅手机端初始化方向检测
+    if (isMobilePhone()) {
+      checkOrientation();
+    }
   </script>
 </body>
 </html>
