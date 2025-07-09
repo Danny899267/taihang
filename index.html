@@ -94,11 +94,11 @@
 </head>
 <body class="flex items-center justify-center">
   <div class="relative w-full max-w-6xl h-[85vh] max-h-[700px] z-10">
-    <!-- 翻页按钮 -->
-    <button id="prev-btn" class="absolute left-[-60px] top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all">
+    <!-- 翻页按钮 - 优化响应式样式 -->
+    <button id="prev-btn" class="fixed left-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all md:absolute md:left-[-60px]">
       <i class="fa fa-chevron-left text-gray-700 text-lg"></i>
     </button>
-    <button id="next-btn" class="absolute right-[-60px] top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all">
+    <button id="next-btn" class="fixed right-4 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-full w-12 h-12 flex items-center justify-center shadow-xl hover:bg-gray-50 z-30 transition-all md:absolute md:right-[-60px]">
       <i class="fa fa-chevron-right text-gray-700 text-lg"></i>
     </button>
 
@@ -161,10 +161,6 @@
           <div class="slide-number relative z-10" style="margin-bottom:5px">6/7</div>
       </div>
       
-      
-
-      
-      </div>
     </div>
   </div>
 
@@ -248,4 +244,5 @@
     showSlide(currentSlide);
   </script>
 </body>
+
 </html>
