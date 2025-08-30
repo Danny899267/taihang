@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>视频展示页面</title>
+    <title>What can we do for the Nassau Botanical Garden?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 原有样式保持不变 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background-color: #f5f7fa;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
             color: #333;
             line-height: 1.6;
             padding: 20px;
@@ -24,104 +26,193 @@
         header {
             text-align: center;
             margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 15px;
             color: #2c3e50;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin: 40px 0 20px;
+            color: #3498db;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #3498db, #2c3e50);
         }
         
         .intro-text {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
+            line-height: 1.8;
         }
         
-        .main-video {
+        .intro-text p {
+            margin-bottom: 15px;
+        }
+        
+        .intro-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .main-content {
             position: relative;
             width: 100%;
             margin-bottom: 30px;
         }
         
-        .video-container {
+        .media-container {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 比例 */
             height: 0;
             overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #f0f0f0; /* 添加背景色以便在图片加载时显示 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        .video-container iframe,
-        .video-container video {
+        .media-container img,
+        .media-container video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
+            transition: transform 0.5s ease;
         }
         
-        .video-description {
+        /* 修改图片的object-fit属性为contain */
+        .media-container.image-container img {
+            object-fit: contain;
+        }
+        
+        .media-container:hover img {
+            transform: scale(1.03);
+        }
+        
+        .media-description {
             background-color: #fff;
-            padding: 15px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             margin-top: 15px;
         }
         
-        .video-grid {
+        .media-description h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .media-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 25px;
             margin-top: 30px;
         }
         
-        .video-card {
+        .media-card {
             background: #fff;
-            border-radius: 8px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        .media-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
         }
         
-        .card-video {
+        .card-media {
             position: relative;
             padding-bottom: 56.25%; /* 16:9 比例 */
             height: 0;
             overflow: hidden;
         }
         
-        .card-video iframe,
-        .card-video video {
+        .card-media img,
+        .card-media video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card-media:hover img {
+            transform: scale(1.05);
         }
         
         .card-description {
-            padding: 15px;
+            padding: 20px;
+        }
+        
+        .card-description h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .card-description p {
+            color: #7f8c8d;
+        }
+        
+        .icon-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .icon-badge i {
+            font-size: 20px;
+            color: #3498db;
         }
         
         /* 平板设备响应式设计 */
         @media (max-width: 900px) {
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
             }
             
-            .video-grid {
-                gap: 15px;
+            .media-grid {
+                gap: 20px;
+            }
+            
+            .card-description {
+                padding: 15px;
             }
         }
         
@@ -135,105 +226,1597 @@
                 padding: 15px;
             }
             
-            .video-grid {
+            .media-grid {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
-            .intro-text, .video-description {
+            .intro-text, .media-description {
                 padding: 15px;
             }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
         }
+		
+		/* 3图一行小图区域 */
+		.three-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15px;
+			margin-top: 30px;
+		}
+		
+		.three-grid .three-cell {
+			aspect-ratio: 4 / 3;         /* 统一长宽比例 */
+			border-radius: 10px;
+			overflow: hidden;
+			background: #eee;
+			box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+		}
+		
+		.three-grid .three-cell img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;           /* 裁切以铺满容器、统一高度与宽度 */
+			display: block;
+			transition: transform .35s ease;
+		}
+		
+		.three-grid .three-cell:hover img {
+			transform: scale(1.03);
+		}
+		
+		/* 如需在很窄的手机上也强制一行三图，可以不加这个媒体查询；
+		   如果希望窄屏自动换行，两列或一列，可取消注释下面几段： */
+		/*
+		@media (max-width: 600px) {
+			.three-grid { grid-template-columns: repeat(2, 1fr); }
+		}
+		@media (max-width: 400px) {
+			.three-grid { grid-template-columns: 1fr; }
+		}
+		*/
+		
+		.three-grid {
+			margin-top: 30px;
+			margin-bottom: 40px; /* 图片区块底部增加间距 */
+		}
+		
+		.main-content {
+			margin-bottom: 30px; /* 保持原有区块风格一致 */
+		}
+		
+		/* 左一右二的三图布局 */
+		.image-split-grid {
+			display: grid;
+			grid-template-columns: 2fr 1.3fr;
+			grid-template-rows: 1fr 1fr;
+			gap: 15px;
+			margin-top: 50px;
+		}
+		
+		.image-split-grid .big-img {
+			grid-row: span 2; /* 占满两行 */
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-split-grid img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		
+		.image-split-grid img:hover {
+			transform: scale(1.03);
+		}
+		
+		.image-split-grid .small-img {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		.image-split-grid {
+			margin-top: 50px;
+			margin-bottom: 50px;  /* 新增：底部间距 */
+		}
+		/* 左大右二的三图展示区域 */
+		.image-three-split {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+			grid-template-rows: 1fr 1fr;
+			gap: 15px;
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
+		
+		.image-three-split .big {
+			grid-row: span 2; /* 左边大图占两行 */
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-three-split .small {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-three-split img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		
+		.image-three-split img:hover {
+			transform: scale(1.03);
+		}
+		/* 上一张，下一行两张的小图区域 */
+		.image-stack-1x2 {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 15px;
+			margin-top: 50px;
+			margin-bottom: 50px; /* 与下个模块拉开间距 */
+		}
+		
+		.image-stack-1x2 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-stack-1x2 .item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-stack-1x2 .item img:hover { transform: scale(1.03); }
+		
+		/* 上面的大图占满两列，16:9 观感更统一 */
+		.image-stack-1x2 .large { grid-column: 1 / -1; aspect-ratio: 16 / 9; }
+		/* 下面两张小图：统一比例（可改为 3/4 或 1/1 按需要） */
+		.image-stack-1x2 .small { aspect-ratio: 4 / 3; }
+		
+		/* 移动端：竖排三张 */
+		@media (max-width: 600px) {
+			.image-stack-1x2 { grid-template-columns: 1fr; }
+			.image-stack-1x2 .large { grid-column: auto; } /* 取消跨列 */
+		}
+		
+		/* 5图布局：上两张（左2/3 右1/3），下三张（左1/2 中1/4 右1/4） */
+		.image-grid-5v2 {
+			display: grid;
+			grid-template-columns: repeat(12, 1fr);
+			gap: 15px;
+			margin-top: 50px;
+			margin-bottom: 50px;
+		}
+		.image-grid-5v2 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		.image-grid-5v2 .item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-grid-5v2 .item img:hover { transform: scale(1.03); }
+		
+		/* 行1 */
+		.image-grid-5v2 .a { grid-column: 1 / span 8;  aspect-ratio: 16 / 9; } /* 左2/3 */
+		.image-grid-5v2 .b { grid-column: 9 / span 4;  aspect-ratio: 16 / 9; } /* 右1/3 */
+		
+		/* 行2 */
+		.image-grid-5v2 .c { grid-column: 1 / span 6;  aspect-ratio: 16 / 9; } /* 左1/2 */
+		.image-grid-5v2 .d { grid-column: 7 / span 3;  aspect-ratio: 16 / 9; } /* 中1/4 */
+		.image-grid-5v2 .e { grid-column: 10 / span 3; aspect-ratio: 16 / 9; } /* 右1/4 */
+		
+		/* 窄屏：竖排 */
+		@media (max-width: 600px) {
+			.image-grid-5v2 { grid-template-columns: 1fr; }
+			.image-grid-5v2 .item { grid-column: auto; }
+		}
+		/* 5图错落布局 */
+		.image-grid-5-masonry {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			grid-auto-rows: 200px; /* 基础行高，可调整 */
+			gap: 15px;
+			margin: 50px 0;
+		}
+		
+		.image-grid-5-masonry .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-grid-5-masonry img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-grid-5-masonry img:hover { transform: scale(1.03); }
+		
+		/* 布局规则 */
+		.image-grid-5-masonry .a { grid-column: 1 / span 2; grid-row: 1 / span 2; } /* 左侧大图 */
+		.image-grid-5-masonry .b { grid-column: 3 / span 2; grid-row: 1 / span 1; } /* 右上1 */
+		.image-grid-5-masonry .c { grid-column: 3 / span 2; grid-row: 2 / span 1; } /* 右上2 */
+		.image-grid-5-masonry .d { grid-column: 1 / span 2; grid-row: 3 / span 1; } /* 左下1 */
+		.image-grid-5-masonry .e { grid-column: 3 / span 2; grid-row: 3 / span 1; } /* 右下1 */
+		
+		/* 响应式：窄屏竖排 */
+		@media (max-width: 700px) {
+			.image-grid-5-masonry {
+				grid-template-columns: 1fr;
+				grid-auto-rows: auto;
+			}
+			.image-grid-5-masonry .a,
+			.image-grid-5-masonry .b,
+			.image-grid-5-masonry .c,
+			.image-grid-5-masonry .d,
+			.image-grid-5-masonry .e {
+				grid-column: auto;
+				grid-row: auto;
+			}
+		}
+		/* 6图布局 */
+		.image-grid-6 {
+			display: grid;
+			grid-template-columns: repeat(12, 1fr);
+			grid-auto-rows: 200px;
+			gap: 15px;
+			margin: 50px 0;
+		}
+		
+		.image-grid-6 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-grid-6 img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-grid-6 img:hover { transform: scale(1.03); }
+		
+		/* 布局规则 */
+		/* 第一行 */
+		.image-grid-6 .a { grid-column: 1 / span 4; grid-row: 1 / span 2; } /* 左上大图 */
+		.image-grid-6 .b { grid-column: 5 / span 4; grid-row: 1 / span 2; } /* 左上大图 */
+		.image-grid-6 .c { grid-column: 9 / span 4; grid-row: 1 / span 1; } /* 右上小图 */
+		.image-grid-6 .d { grid-column: 9 / span 4; grid-row: 2 / span 1; } /* 右中小图 */
+		
+		/* 第二行 */
+		.image-grid-6 .e { grid-column: 1 / span 8; grid-row: 3 / span 2; } /* 底部大横图 */
+		.image-grid-6 .f { grid-column: 9 / span 4; grid-row: 3 / span 2; } /* 底部右侧竖图 */
+		
+		/* 窄屏响应式：竖排 */
+		@media (max-width: 700px) {
+			.image-grid-6 { grid-template-columns: 1fr; grid-auto-rows: auto; }
+			.image-grid-6 .item { grid-column: auto; grid-row: auto; }
+		}
+		/* 5图布局：上2张大图，下3张小图 */
+		.image-grid-5-top2-bottom3 {
+			display: grid;
+			grid-template-columns: repeat(6, 1fr);
+			grid-auto-rows: 220px; /* 可调高度 */
+			gap: 15px;
+			margin: 50px 0;
+		}
+		
+		.image-grid-5-top2-bottom3 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-grid-5-top2-bottom3 img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-grid-5-top2-bottom3 img:hover { transform: scale(1.03); }
+		
+		/* 布局规则 */
+		.image-grid-5-top2-bottom3 .a { grid-column: 1 / span 3; grid-row: 1 / span 1; } /* 上左 */
+		.image-grid-5-top2-bottom3 .b { grid-column: 4 / span 3; grid-row: 1 / span 1; } /* 上右 */
+		
+		.image-grid-5-top2-bottom3 .c { grid-column: 1 / span 2; grid-row: 2 / span 1; } /* 下左 */
+		.image-grid-5-top2-bottom3 .d { grid-column: 3 / span 2; grid-row: 2 / span 1; } /* 下中 */
+		.image-grid-5-top2-bottom3 .e { grid-column: 5 / span 2; grid-row: 2 / span 1; } /* 下右 */
+		
+		/* 窄屏响应式：竖排 */
+		@media (max-width: 700px) {
+			.image-grid-5-top2-bottom3 { grid-template-columns: 1fr; grid-auto-rows: auto; }
+			.image-grid-5-top2-bottom3 .item { grid-column: auto; grid-row: auto; }
+		}
+		
+		/* 2张图片展示（等高、并排） */
+		.image-grid-2 {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 15px;
+			margin: 50px 0;            /* 与上下模块留出间距 */
+		}
+		
+		.image-grid-2 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+			aspect-ratio: 16 / 9;      /* 两张图等高，可改为 21/9 更宽 */
+		}
+		
+		.image-grid-2 .item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		
+		.image-grid-2 .item img:hover {
+			transform: scale(1.03);
+		}
+		
+		/* 窄屏：改为一列 */
+		@media (max-width: 600px) {
+			.image-grid-2 { grid-template-columns: 1fr; }
+		}
+		
+		/* 4图布局：左大图 + 右三张竖排 */
+		.image-grid-4 {
+			display: grid;
+			grid-template-columns: 2fr 1fr 1fr; /* 左边宽，右边两列窄 */
+			grid-template-rows: auto auto; 
+			gap: 15px;
+			margin: 50px 0;
+		}
+		
+		.image-grid-4 .item {
+			border-radius: 12px;
+			overflow: hidden;
+			box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		.image-grid-4 img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform .35s ease;
+		}
+		.image-grid-4 img:hover { transform: scale(1.03); }
+		
+		/* 布局规则 */
+		.image-grid-4 .a { grid-column: 1 / span 1; grid-row: 1 / span 2; } /* 左大图 */
+		.image-grid-4 .b { grid-column: 2 / span 1; grid-row: 1 / span 1; } /* 右上1 */
+		.image-grid-4 .c { grid-column: 2 / span 1; grid-row: 2 / span 1; } /* 右中2 */
+		.image-grid-4 .d { grid-column: 3 / span 1; grid-row: 1 / span 2; } /* 右竖图 */
+		
+		/* 窄屏响应式：竖排 */
+		@media (max-width: 700px) {
+			.image-grid-4 {
+				grid-template-columns: 1fr;
+				grid-template-rows: auto;
+			}
+			.image-grid-4 .item {
+				grid-column: auto;
+				grid-row: auto;
+			}
+		}
+		
+		/* 左大图 + 右竖图 */
+		.image-split-left-big {
+		  display: grid;
+		  grid-template-columns: 2fr 1fr;  /* 左宽右窄 */
+		  gap: 15px;
+		  margin: 50px 0;
+		  align-items: stretch;            /* 让两列等高 */
+		}
+		
+		.image-split-left-big .item {
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		}
+		
+		/* 左侧：设定整体高度比例 */
+		.image-split-left-big .left {
+		  aspect-ratio: 16 / 9;
+		}
+		
+		/* 右侧：跟随左侧等高 */
+		.image-split-left-big .right {
+		  display: grid;                   /* 让内部 img 填满单元格高度 */
+		}
+		
+		.image-split-left-big img {
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-split-left-big img:hover { transform: scale(1.03); }
+		
+		/* 窄屏竖排 */
+		@media (max-width: 700px) {
+		  .image-split-left-big { grid-template-columns: 1fr; }
+		  .image-split-left-big .left { aspect-ratio: 16 / 9; }
+		}
+		
+				/* 左大图 + 右竖图（安全版，不会超宽、不重叠） */
+		.image-split-2safe {
+		  display: grid;
+		  grid-template-columns: 2fr 1fr;   /* 左宽右窄 */
+		  gap: 15px;
+		  margin: 50px 0;                   /* 与上下模块留白 */
+		}
+		
+		.image-split-2safe .cell {
+		  position: relative;               /* 让内部 img 绝对定位的参照物 */
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  background: #eee;
+		}
+		
+		/* 比例盒子：让整行确定统一高度（16:9，可按需改 21:9） */
+		.image-split-2safe .cell::before {
+		  content: "";
+		  display: block;
+		  padding-top: 56.25%;              /* 16 / 9 */
+		}
+		
+		/* 图片填满容器且不拉伸 */
+		.image-split-2safe img {
+		  position: absolute;
+		  inset: 0;                         /* top:0; right:0; bottom:0; left:0 */
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-split-2safe img:hover { transform: scale(1.03); }
+		
+		/* 窄屏：改为一列（每张仍按 16:9 显示） */
+		@media (max-width: 700px) {
+		  .image-split-2safe { grid-template-columns: 1fr; }
+		}
+		
+				/* 2图：左小右大（安全等高） */
+		.image-2-leftsmall-rightbig {
+		  display: grid;
+		  grid-template-columns: 1fr 2fr;   /* 左小右大 */
+		  gap: 15px;
+		  margin: 50px 0;
+		}
+		
+		.image-2-leftsmall-rightbig .cell {
+		  position: relative;
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  background: #eee;
+		}
+		
+		/* 统一行高：16:9，可按需改为 21:9（42.857%）或 4:3（75%） */
+		.image-2-leftsmall-rightbig .cell::before {
+		  content: "";
+		  display: block;
+		  padding-top: 56.25%;
+		}
+		
+		.image-2-leftsmall-rightbig img {
+		  position: absolute;
+		  inset: 0;
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-2-leftsmall-rightbig img:hover { transform: scale(1.03); }
+		
+		/* 窄屏竖排 */
+		@media (max-width: 700px) {
+		  .image-2-leftsmall-rightbig { grid-template-columns: 1fr; }
+		}
+		.image-2-leftsmall-rightbig video {
+		  position: absolute;
+		  inset: 0;
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-2-leftsmall-rightbig video:hover { transform: scale(1.03); }
+		
+		/* 5图：左两张上下 + 中间大图贯穿 + 右上小右下高 */
+		.image-grid-5-asym {
+		  display: grid;
+		  grid-template-columns: repeat(12, 1fr);
+		  grid-auto-rows: 140px;       /* 基础行高，可按需要微调 120~180 */
+		  gap: 15px;
+		  margin: 50px 0;
+		}
+		.image-grid-5-asym .item {
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  background: #eee;
+		  position: relative;
+		}
+		.image-grid-5-asym .item img {
+		  position: absolute; inset: 0;
+		  width: 100%; height: 100%;
+		  object-fit: cover; display: block;
+		  transition: transform .35s ease;
+		}
+		.image-grid-5-asym .item img:hover { transform: scale(1.03); }
+		
+		/* 布局：12列栅格 + 行跨度控制高度比例 */
+		.image-grid-5-asym .a { grid-column: 1 / span 3;  grid-row: 1 / span 3; } /* 左上 */
+		.image-grid-5-asym .b { grid-column: 1 / span 3;  grid-row: 4 / span 3; } /* 左下 */
+		.image-grid-5-asym .c { grid-column: 4 / span 6;  grid-row: 1 / span 6; } /* 中间大图 */
+		.image-grid-5-asym .d { grid-column: 10 / span 3; grid-row: 1 / span 2; } /* 右上小图 */
+		.image-grid-5-asym .e { grid-column: 10 / span 3; grid-row: 3 / span 4; } /* 右下高图 */
+		
+		/* 窄屏竖排 */
+		@media (max-width: 700px) {
+		  .image-grid-5-asym { grid-template-columns: 1fr; grid-auto-rows: auto; }
+		  .image-grid-5-asym .item { position: relative; }
+		  .image-grid-5-asym .a,
+		  .image-grid-5-asym .b,
+		  .image-grid-5-asym .c,
+		  .image-grid-5-asym .d,
+		  .image-grid-5-asym .e { grid-column: auto; grid-row: auto; }
+		}
+		
+		/* 5图：上3张等宽，下左跨两列、右一列 */
+		.image-grid-5-3top-2bottom {
+		  display: grid;
+		  grid-template-columns: repeat(3, 1fr);
+		  gap: 15px;
+		  margin: 50px 0;
+		}
+		
+		.image-grid-5-3top-2bottom .item {
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  position: relative;
+		  background: #eee;
+		}
+		
+		/* 顶部三张：16:9 */
+		.image-grid-5-3top-2bottom .top {
+		  aspect-ratio: 16 / 9;
+		}
+		
+		/* 第二排左：跨两列 —— 提高高度 */
+		.image-grid-5-3top-2bottom .bottom-wide {
+		  grid-column: span 2;
+		  /* 原来是 32 / 9（偏扁），改成 32 / 12 更高一些 */
+		  aspect-ratio: 32 / 12;   /* ≈ 8:3 */
+		}
+		
+		/* 第二排右：提高高度 */
+		.image-grid-5-3top-2bottom .bottom {
+		  /* 原来是 16 / 9，改成 16 / 12 更高一些 */
+		  aspect-ratio: 16 / 12;   /* = 4:3 */
+		  /* 如果某些图还想少裁一点，可选： */
+		  /* object-position: center top; */
+		}
+
+
+		
+		.image-grid-5-3top-2bottom img {
+		  position: absolute; inset: 0;
+		  width: 100%; height: 100%;
+		  object-fit: cover; display: block;
+		  transition: transform .35s ease;
+		}
+		.image-grid-5-3top-2bottom img:hover { transform: scale(1.03); }
+		
+		/* 窄屏：竖排 */
+		@media (max-width: 700px) {
+		  .image-grid-5-3top-2bottom {
+			grid-template-columns: 1fr;
+		  }
+		  .image-grid-5-3top-2bottom .bottom-wide { grid-column: auto; aspect-ratio: 16 / 9; }
+		}
+
+		/* 左大图 + 右上小图，下半留白 */
+		.image-2-leftbig-rightsmall {
+		  display: grid;
+		  grid-template-columns: 2fr 1fr;   /* 左宽右窄 */
+		  gap: 15px;
+		  margin: 50px 0;
+		  align-items: start;               /* 右侧小图靠上 */
+		}
+		
+		.image-2-leftbig-rightsmall .cell {
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  background: #eee;
+		  position: relative;
+		}
+		
+		/* 左大图保持比例 */
+		.image-2-leftbig-rightsmall .left {
+		  aspect-ratio: 16 / 9;
+		}
+		
+		/* 右小图：设定固定高度，让下半部分留白 */
+		.image-2-leftbig-rightsmall .right {
+		  height: 200px;   /* 可按需要调整 */
+		}
+		
+		.image-2-leftbig-rightsmall img {
+		  width: 100%;
+		  height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-2-leftbig-rightsmall img:hover { transform: scale(1.03); }
+		
+		/* 窄屏：竖排 */
+		@media (max-width: 700px) {
+		  .image-2-leftbig-rightsmall { grid-template-columns: 1fr; }
+		  .image-2-leftbig-rightsmall .right { height: auto; aspect-ratio: 16 / 9; }
+		}
+		
+		/* 3张竖图并排 */
+		.image-grid-3-vertical {
+		  display: grid;
+		  grid-template-columns: repeat(3, 1fr);
+		  gap: 15px;
+		  margin: 50px 0;
+		}
+		
+		.image-grid-3-vertical .item {
+		  border-radius: 12px;
+		  overflow: hidden;
+		  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+		  background: #eee;
+		  position: relative;
+		  aspect-ratio: 3 / 4;   /* 竖图比例，可调整为 2/3 或 9/16 */
+		}
+		
+		.image-grid-3-vertical img {
+		  position: absolute; inset: 0;
+		  width: 100%; height: 100%;
+		  object-fit: cover;
+		  display: block;
+		  transition: transform .35s ease;
+		}
+		.image-grid-3-vertical img:hover { transform: scale(1.03); }
+		
+		/* 窄屏竖排 */
+		@media (max-width: 700px) {
+		  .image-grid-3-vertical { grid-template-columns: 1fr; }
+		}
+		
+		/* 单张大图，占满宽度 */
+	.image-fullwidth {
+	  width: 100%;
+	  margin: 50px 0;
+	  border-radius: 12px;
+	  overflow: hidden;
+	  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+	  position: relative;
+	}
+	
+	.image-fullwidth img {
+	  width: 100%;
+	  height: auto;        /* 保持原始比例 */
+	  display: block;
+	  object-fit: cover;
+	  transition: transform .35s ease;
+	}
+	
+	.image-fullwidth img:hover {
+	  transform: scale(1.03);
+	}
+
+	/* 底部分隔线 */
+	.footer-line {
+	  border-top: 2px solid rgba(0,0,0,0.1);
+	  margin: 50px 0 20px; /* 上下间距 */
+	}
+	
+	/* 底部文本框 */
+	.footer-box {
+	  background-color: #fff;
+	  padding: 25px;
+	  border-radius: 12px;
+	  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+	  line-height: 1.8;
+	  font-size: 18px;
+	  color: #333;
+	}
+
+
     </style>
 </head>
 <body>
     <header>
-        <h1>精彩视频展示</h1>
+        <h1>What can we do for the Nassau Botanical Garden?</h1>
     </header>
     
     <section class="intro-text">
-        <p>欢迎来到我们的视频展示页面，这里汇集了各种精彩内容。第一行介绍文字，简要说明网站的主题和目的。</p>
-        <p>第二行介绍文字，进一步描述视频内容的分类和特色，让访问者对我们的内容有更全面的了解。</p>
+        <p style="font-size:24px">Taihang Environmental Art Fountain Co., Ltd., our professional areas include fountain, lighting systems and acoustic engineering, etc.</p>
+        
     </section>
+    <!--音乐喷泉视频展示大屏-->
+    <h1 class="section-title">1. Musical Fountain</h1>
     
-    <section class="main-video">
-        <div class="video-container">
-            <!-- 替换为实际视频嵌入代码 -->
-            <video controls poster="https://via.placeholder.com/800x450.png?text=主视频">
-                <source src="show1.mp4" type="video/mp4">
+    <section class="main-content">
+        <div class="media-container">
+            <video controls>
+                <source src="music1.mp4" type="video/mp4">
                 您的浏览器不支持HTML5视频标签。
             </video>
+            <div class="icon-badge">
+                <i class="fas fa-play"></i>
+            </div>
         </div>
-        <div class="video-description">
-            <h3>主视频标题介绍</h3>
-            <p>这里是主视频的详细介绍文字，包括视频内容概述、制作背景、特色亮点等。这段文字可以帮助观众更好地理解视频内容，提高观看体验。</p>
+        <div class="media-description">
+            <h3>Large musical fountain</h3>
+            <p style="font-size:20px">Musical fountain includes: creativity, design, laser, water curtain movie, lighting</p>
         </div>
     </section>
     
-    <section class="video-grid">
+    <!--视频展示大屏-->
+    
+    
+    <section class="main-content">
+        <div class="media-container">
+            <video controls>
+                <source src="music2.mp4" type="video/mp4">
+                您的浏览器不支持HTML5视频标签。
+            </video>
+            <div class="icon-badge">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+        <div class="media-description">
+            <h3>Miami International Music Festival</h3>
+            <p style="font-size:20px">Our company built a spectacular musical fountain for the Miami International Music Festival</p>
+        </div>
+    </section>
+    
+    <!--广场喷泉视频展示2个-->
+    <h1 class="section-title">2. Dry Fountain</h1>
+    
+    <section class="media-grid">
         <!-- 视频卡片 1 -->
-        <div class="video-card">
-            <div class="card-video">
-                <video controls poster="https://via.placeholder.com/400x225.png?text=视频1">
-                    <source src="#" type="video/mp4">
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="dry1.mp4" type="video/mp4">
                     您的浏览器不支持HTML5视频标签。
                 </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
             </div>
             <div class="card-description">
-                <h4>视频一标题</h4>
-                <p>这是第一个视频的简要介绍文字，描述视频的主要内容和特点。</p>
+                <h4>Large square dry fountain</h4>
+                <p>When not spraying water, the ground is flat and open, which can be used as a pedestrian walkway or a place for leisure activities, making full use of the space, especially suitable for areas with large flow of people such as squares</p>
             </div>
         </div>
         
         <!-- 视频卡片 2 -->
-        <div class="video-card">
-            <div class="card-video">
-                <video controls poster="https://via.placeholder.com/400x225.png?text=视频2">
-                    <source src="#" type="video/mp4">
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="dry2.mp4" type="video/mp4">
                     您的浏览器不支持HTML5视频标签。
                 </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
             </div>
             <div class="card-description">
-                <h4>视频二标题</h4>
-                <p>这是第二个视频的简要介绍文字，描述视频的主要内容和特点。</p>
+                <h4>Small square dry fountain</h4>
+                <p>The dry fountain combines waterscape and lighting effects. Through carefully choreographed music and lighting design, synchronized with the changes in the fountain water column, it creates a multi-level audio-visual experience with high viewing value.</p>
+            </div>
+        </div>
+        
+    </section>
+    
+    <!--互动喷泉6个-->
+    <h1 class="section-title">3. Interactive Fountain</h1>
+    
+    <section class="media-grid">
+        <!-- 视频卡片 1 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive1.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Graffiti interactive fountain</h4>
+                <p>Participants can draw any pattern on the screen, and the falling water curtain of the fountain will transform into the pattern of graffiti on the screen</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 2 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive2.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Swing interactive fountain</h4>
+                <p>The person swinging on the swing needs to judge the best time to swing according to the time when the water curtain falls.</p>
             </div>
         </div>
         
         <!-- 视频卡片 3 -->
-        <div class="video-card">
-            <div class="card-video">
-                <video controls poster="https://via.placeholder.com/400x225.png?text=视频3">
-                    <source src="#" type="video/mp4">
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive3.mp4" type="video/mp4">
                     您的浏览器不支持HTML5视频标签。
                 </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
             </div>
             <div class="card-description">
-                <h4>视频三标题</h4>
-                <p>这是第三个视频的简要介绍文字，描述视频的主要内容和特点。</p>
+                <h4>Jumping Fountain</h4>
+                <p>The fountain sprays out an arc-shaped water column that slides through the air. It can be installed in a square or on the roadside. When people walk on the road, the water column crosses over their heads.</p>
             </div>
         </div>
         
         <!-- 视频卡片 4 -->
-        <div class="video-card">
-            <div class="card-video">
-                <video controls poster="https://via.placeholder.com/400x225.png?text=视频4">
-                    <source src="#" type="video/mp4">
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive4.mp4" type="video/mp4">
                     您的浏览器不支持HTML5视频标签。
                 </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
             </div>
             <div class="card-description">
-                <h4>视频四标题</h4>
-                <p>这是第四个视频的简要介绍文字，描述视频的主要内容和特点。</p>
+                <h4>Piano Interactive Fountain</h4>
+                <p>There are simulated piano keys on the ground. When people step on them, they will make the sound of piano keys. At the same time, the jumping fountain next to it will jump with the music.</p>
+            </div>
+        </div>
+        <!-- 视频卡片 5 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive5.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Fog Forest Fountain</h4>
+                <p>The mist fountain can sense whether there are people around to spray water mist and lower the ambient temperature.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 6 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="interactive6.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Bicycle Fountain</h4>
+                <p>When the participants pedal the bicycle, as the bicycle rotates faster, the fountain water column will become higher and higher.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!--互动投影4个-->
+    <h1 class="section-title">4. Interactive Projection</h1>
+    
+    <section class="media-grid">
+        <!-- 视频卡片 1 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="Shadow1.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Interactive Map</h4>
+                <p>By touching the map on the wall, the current regional area will be highlighted in color, delivering a visually striking experience.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 2 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="Shadow2.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Immersive Interactive Projection</h4>
+                <p>Through the projection covering both walls and floor, visitors enter an immersive projection space, experiencing the realism brought by the 3D effect.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 3 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="Shadow3.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Running Interactive Wall</h4>
+                <p>The figures in the projected image can move in sync with people running in front of the screen.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 4 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="Shadow4.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Interactive Projection Corridor</h4>
+                <p>The corridor projection can simulate a sandy beach, leaving footprints as you walk over it. It can also simulate various objects, allowing participants to interact by stepping on them.</p>
+            </div>
+        </div>
+       
+    </section>
+    
+    <!--灯光秀4个-->
+    <h1 class="section-title">5. Light Show</h1>
+    
+    <section class="media-grid">
+        <!-- 视频卡片 1 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="lighting1.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>The Dance of Plants and Animals</h4>
+                <p>Decorate the botanical garden with lanterns shaped like plants and animals, complemented by laser lights to enhance the garden's vibrant colors at night.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 2 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="lighting2.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Starry Sky Walkway</h4>
+                <p>Through starlight lighting design, visitors walking along the forest path find themselves surrounded by countless stars, as if floating in outer space.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 3 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="lighting3.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Projection Animation</h4>
+                <p>Using trees as projection canvases, the lights blend with the plants to create a visual spectacle for visitors.</p>
+            </div>
+        </div>
+        
+        <!-- 视频卡片 4 -->
+        <div class="media-card">
+            <div class="card-media">
+                <video controls>
+                    <source src="lighting4.mp4" type="video/mp4">
+                    您的浏览器不支持HTML5视频标签。
+                </video>
+                <div class="icon-badge">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-description">
+                <h4>Pathway Projection</h4>
+                <p>Using projectors, pre-designed patterns are cast onto the walkways from above, replacing traditional lighting to make the botanical garden's nights more vibrant.</p>
+            </div>
+        </div>
+       
+    </section>
+    
+    <header>
+        <h1 style="margin-top:100px">Lighting Design Proposal for the Nighttime Light Show at Nassau Botanical Gardens</h1>
+    </header>
+    
+    <!--图片展示大屏-->
+    <h1 class="section-title">Nassau Botanical Gardens Night Tour Master Plan</h1>
+    
+    <section class="main-content">
+        <div class="media-container image-container">
+            <img src="1.jpg" alt="Map">
+            <div class="icon-badge">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+        
+    </section>
+    
+    <!--图片展示1行3屏-->
+    <h2 class="section-title">1.ENTRANCE WELCOME AREA – "MOONLIGHT PIER"</h2>
+    
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="1-1.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-2.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-3.png" alt="" loading="lazy">
+        </div>
+    </section>
+    
+    <section class="main-content">
+        <div class="media-container">
+            <video controls>
+                <source src="1-4.mp4" type="video/mp4">
+                您的浏览器不支持HTML5视频标签。
+            </video>
+            <div class="icon-badge">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="1-5.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-6.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-7.png" alt="" loading="lazy">
+        </div>
+    </section>
+    
+    <!-- 三张图展示：左大右二 -->
+    <section class="image-split-grid">
+        <div class="big-img">
+            <img src="1-8.png" alt=""  loading="lazy">
+        </div>
+        <div class="small-img">
+            <img src="1-9.png" alt=""  loading="lazy">
+        </div>
+        <div class="small-img">
+            <img src="1-10.png" alt=""  loading="lazy">
+        </div>
+    </section>
+    
+    <section class="main-content">
+        <div class="media-container image-container">
+            <img src="1-11.png" alt="Map">
+            <div class="icon-badge">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+        
+    </section>
+    
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="1-12.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-13.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-14.png" alt="" loading="lazy">
+        </div>
+    </section>
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="1-15.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-16.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="1-17.png" alt="" loading="lazy">
+        </div>
+    </section>
+    
+    <h2 class="section-title">2.TROPICAL BOTANICAL AREA - "FLUORESCENT JUNGLE"</h2>
+    
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="2-1.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="2-2.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="2-3.png" alt="" loading="lazy">
+        </div>
+    </section>
+    
+    <!-- 图片样式：上一张长图，下一行两张小图（无标题无注释） -->
+    <section class="image-stack-1x2">
+      <div class="item large">
+        <img src="2-4.png" alt="" loading="lazy">
+      </div>
+      <div class="item small">
+        <img src="2-5.png" alt="" loading="lazy">
+      </div>
+      <div class="item small">
+        <img src="2-6.png" alt="" loading="lazy">
+      </div>
+    </section>
+    
+    
+    
+    <section class="media-grid">
+        <!-- 图片卡片 1 -->
+        <div class="media-card">
+            <div class="card-media">
+                <img src="2-7.png" alt="森林景观">
+                <div class="icon-badge">
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+            
+        </div>
+        
+        <!-- 图片卡片 2 -->
+        <div class="media-card">
+            <div class="card-media">
+                <img src="2-8.png" alt="城市景观">
+                <div class="icon-badge">
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+           
+        </div>
+        
+    </section>
+    
+    
+    <!-- 5张图片展示：错落布局 -->
+    <section class="image-grid-5-masonry">
+      <div class="item a">
+        <img src="2-9.png" alt="" loading="lazy">
+      </div>
+      <div class="item b">
+        <img src="2-10.png" alt="" loading="lazy">
+      </div>
+      <div class="item c">
+        <img src="2-11.png" alt="" loading="lazy">
+      </div>
+      <div class="item d">
+        <img src="2-12.png" alt="" loading="lazy">
+      </div>
+      <div class="item e">
+        <img src="2-13.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+
+    
+    <section class="main-content">
+        <div class="media-container image-container">
+            <img src="2-14.png" alt="Map">
+            <div class="icon-badge">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+        
+    </section>
+    
+    <section class="main-content">
+        <div class="media-container image-container">
+            <img src="2-15.png" alt="Map">
+            <div class="icon-badge">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+        
+    </section>
+    
+    <!-- 6张图片展示 -->
+    <section class="image-grid-6">
+      <div class="item a">
+        <img src="2-17.png" alt="" loading="lazy">
+      </div>
+      <div class="item b">
+        <img src="2-18.png" alt="" loading="lazy">
+      </div>
+      <div class="item c">
+        <img src="2-22.png" alt="" loading="lazy">
+      </div>
+      <div class="item d">
+        <img src="2-21.png" alt="" loading="lazy">
+      </div>
+      <div class="item e">
+        <img src="2-20.png" alt="" loading="lazy">
+      </div>
+      <div class="item f">
+        <img src="2-19.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <!-- 5张图片展示：上2张大图，下3张小图 -->
+    <section class="image-grid-5-top2-bottom3">
+      <div class="item a">
+        <img src="2-23.png" alt="" loading="lazy">
+      </div>
+      <div class="item b">
+        <img src="2-24.png" alt="" loading="lazy">
+      </div>
+    
+      <div class="item c">
+        <img src="2-25.png" alt="" loading="lazy">
+      </div>
+      <div class="item d">
+        <img src="2-26.png" alt="" loading="lazy">
+      </div>
+      <div class="item e">
+        <img src="2-27.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    
+    <h2 class="section-title">3.AQUATIC PLANT AREA - "REFLECTION OF THE MILKY WAY"</h2>
+    
+    <!-- 2张图片展示（无标题无注释） -->
+    <section class="image-grid-2">
+      <div class="item">
+        <img src="3-1.png" alt="" loading="lazy">
+      </div>
+      <div class="item">
+        <img src="3-2.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <section class="main-content">
+        <div class="media-container">
+            <video controls>
+                <source src="3-3.mp4" type="video/mp4">
+                您的浏览器不支持HTML5视频标签。
+            </video>
+            <div class="icon-badge">
+                <i class="fas fa-play"></i>
+            </div>
+        </div>
+    </section>
+    
+    <!-- 4张图片展示：左大图 + 右三张竖排 -->
+    <section class="image-grid-4">
+      <div class="item a">
+        <img src="3-4.png" alt="" loading="lazy">
+      </div>
+      <div class="item b">
+        <img src="3-5.png" alt="" loading="lazy">
+      </div>
+      <div class="item c">
+        <img src="3-6.png" alt="" loading="lazy">
+      </div>
+      <div class="item d">
+        <img src="3-7.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <section class="main-content">
+        <div class="media-container image-container">
+            <img src="3-8.png" alt="Map" loading="lazy">
+            <div class="icon-badge">
+                <i class="fas fa-image"></i>
+            </div>
+        </div>
+        
+    </section>
+ 
+    <!-- 左大图 + 右竖图（安全版） -->
+    <section class="image-split-2safe">
+      <div class="cell">
+        <img src="3-9.png" alt="" loading="lazy">
+      </div>
+      <div class="cell">
+        <img src="3-10.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+    <!-- 左侧小视频 + 右侧大图 -->
+    <section class="image-2-leftsmall-rightbig">
+      <div class="cell">
+        <video autoplay muted loop playsinline controls>
+          <source src="3-11.mp4" type="video/mp4">
+          您的浏览器不支持 HTML5 视频标签。
+        </video>
+        <div class="icon-badge">
+            <i class="fas fa-play"></i>
+        </div>
+      </div>
+      <div class="cell">
+        <video autoplay muted loop playsinline controls>
+          <source src="3-12.mp4" type="video/mp4">
+          您的浏览器不支持 HTML5 视频标签。
+        </video>
+        <div class="icon-badge">
+            <i class="fas fa-play"></i>
+        </div>
+      </div>
+    </section>
+
+	<!-- 2张图片展示（无标题无注释） -->
+    <section class="image-grid-2">
+      <div class="item">
+        <img src="3-13.png" alt="" loading="lazy">
+      </div>
+      <div class="item">
+        <img src="3-14.png" alt="" loading="lazy">
+      </div>
+    </section>
+    
+    <h2 class="section-title">4.THEME INTERACTIVE AREA - "PLANT SECRET LANGUAGE"</h2>
+    
+    <!-- 3张小图一行（无标题、无注释） -->
+    <section class="three-grid">
+        <div class="three-cell">
+            <img src="4-1.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="4-2.png" alt="" loading="lazy">
+        </div>
+        <div class="three-cell">
+            <img src="4-3.png" alt="" loading="lazy">
+        </div>
+    </section>
+    
+    <!-- 5张图片展示：左两张上下 + 中间大图 + 右上小右下高 -->
+    <section class="image-grid-5-asym">
+      <div class="item a"><img src="4-4.png" alt="" loading="lazy"></div>
+      <div class="item b"><img src="4-5.png" alt="" loading="lazy"></div>
+      <div class="item c"><img src="4-6.png" alt="" loading="lazy"></div>
+      <div class="item d"><img src="4-7.png" alt="" loading="lazy"></div>
+      <div class="item e"><img src="4-8.png" alt="" loading="lazy"></div>
+    </section>
+
+	<section class="main-content">
+        <div class="media-container">
+            <video controls>
+                <source src="4-9.mp4" type="video/mp4">
+                您的浏览器不支持HTML5视频标签。
+            </video>
+            <div class="icon-badge">
+                <i class="fas fa-play"></i>
             </div>
         </div>
     </section>
 
+	<!-- 5张图片展示：上3张、下左跨两列右一列 -->
+    <section class="image-grid-5-3top-2bottom">
+      <div class="item top"><img src="4-10.png" alt="" loading="lazy"></div>
+      <div class="item top"><img src="4-11.png" alt="" loading="lazy"></div>
+      <div class="item top"><img src="4-12.png" alt="" loading="lazy"></div>
+    
+      <div class="item bottom-wide"><img src="4-13.png" alt="" loading="lazy"></div>
+      <div class="item bottom"><img src="4-14.png" alt="" loading="lazy"></div>
+    </section>
+
+	
+    <!-- 左大图 + 右上小图，下半留白 -->
+    <section class="image-2-leftbig-rightsmall">
+      <div class="cell left">
+        <img src="4-15.png" alt="" loading="lazy">
+      </div>
+      <div class="cell right">
+        <img src="4-16.png" alt="" loading="lazy">
+      </div>
+    </section>
+
+	<!-- 2张图片展示（无标题无注释） -->
+    <section class="image-grid-2">
+      <div class="item">
+        <img src="4-17.png" alt="" loading="lazy">
+      </div>
+      <div class="item">
+        <img src="4-18.png" alt="" loading="lazy">
+      </div>
+    </section>
+    
+    
+    <h2 class="section-title">5.RECOMMENDED STYLES OF BOTANICAL GARDEN LIGHTS</h2>
+    
+    <!-- 3张竖图展示 -->
+    <section class="image-grid-3-vertical">
+      <div class="item"><img src="5-1.png" alt="" loading="lazy"></div>
+      <div class="item"><img src="5-2.png" alt="" loading="lazy"></div>
+      <div class="item"><img src="5-3.png" alt="" loading="lazy"></div>
+    </section>
+
+	<!-- 一整张大图，占满宽度 -->
+    <section class="image-fullwidth">
+      <img src="5-4.png" alt="" loading="lazy">
+    </section>
+
+	<!-- 一整张大图，占满宽度 -->
+    <section class="image-fullwidth">
+      <img src="5-5.png" alt="" loading="lazy">
+    </section>
+
+	<!-- 一整张大图，占满宽度 -->
+    <section class="image-fullwidth">
+      <img src="5-6.png" alt="" loading="lazy">
+    </section>
+    
+    <!-- 一整张大图，占满宽度 -->
+    <section class="image-fullwidth">
+      <img src="5-7.png" alt="" loading="lazy">
+    </section>
+    
+    <!-- 底部分隔线 -->
+    <div class="footer-line"></div>
+    
+    <!-- 底部文本框 -->
+    <div class="footer-box">
+      All modules and designs listed above can be customized and developed to reflect the culture and unique characteristics of The Bahamas.
+    </div>
+
+
+
     <script>
         // 简单的响应式调整
         window.addEventListener('resize', function() {
-            // 可以添加额外的响应式行为
             console.log('窗口大小已改变：', window.innerWidth, 'x', window.innerHeight);
+        });
+        
+        // 图片懒加载实现
+        document.addEventListener('DOMContentLoaded', function() {
+            const lazyMedia = document.querySelectorAll('.card-media img, .card-media video');
+            
+            if ('IntersectionObserver' in window) {
+                const lazyMediaObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            const media = entry.target;
+                            if (media.tagName === 'IMG' && media.dataset.src) {
+                                media.src = media.dataset.src;
+                            } else if (media.tagName === 'VIDEO' && media.dataset.src) {
+                                media.src = media.dataset.src;
+                            }
+                            lazyMediaObserver.unobserve(media);
+                        }
+                    });
+                });
+                
+                lazyMedia.forEach(function(media) {
+                    lazyMediaObserver.observe(media);
+                });
+            }
+
+            // 修改1: 当一个视频播放时，暂停其他视频
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                video.addEventListener('play', () => {
+                    videos.forEach(v => {
+                        if (v !== video) {
+                            v.pause();
+                        }
+                    });
+                });
+            });
+
+            // 修改2: 为每个视频自动生成第一帧作为poster
+            videos.forEach(video => {
+                video.addEventListener('loadedmetadata', () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    video.currentTime = 0; // 寻求到第一帧
+                });
+
+                video.addEventListener('seeked', () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                    const dataURL = canvas.toDataURL('image/png');
+                    video.setAttribute('poster', dataURL);
+                    video.currentTime = 0; // 重置到开始
+                }, { once: true }); // 只执行一次
+            });
         });
     </script>
 </body>
-
 </html>
